@@ -1,5 +1,6 @@
 package com.personal.designPattern;
 
+import com.personal.designPattern.cor.logger.Logger;
 import com.personal.designPattern.factory.lb.src.LeastConnectionLoadBalancer;
 import com.personal.designPattern.factory.lb.src.LoadBalancer;
 import com.personal.designPattern.state.vendingMachine.VendingMachine;
@@ -14,13 +15,19 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
         //vendingMachineDriver();
-        loadBalancerDrive();
-
-
+        //loadBalancerDriver();
+        loggerDriver();
 
     }
 
-    private static void loadBalancerDrive() throws Exception {
+    private static void loggerDriver() {
+        Logger logger = Logger.getLogger();
+        logger.info("info log");
+        logger.debug("debug log");
+        logger.error("error log");
+    }
+
+    private static void loadBalancerDriver() throws Exception {
 
 
         LoadBalancer loadBalancer = new LeastConnectionLoadBalancer();
