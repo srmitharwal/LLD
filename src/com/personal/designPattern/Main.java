@@ -8,16 +8,58 @@ import com.personal.designPattern.state.vendingMachine.bo.Product;
 import com.personal.designPattern.state.vendingMachine.service.serviceImpl.CoinServiceImpl;
 import com.personal.designPattern.state.vendingMachine.service.serviceImpl.ProductServiceImpl;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
 
 public class Main {
 
     public static void main(String[] args) throws Exception {
         //vendingMachineDriver();
         //loadBalancerDriver();
-        loggerDriver();
+        //loggerDriver();
+        zipTest();
+    }
 
+    private static void zipTest() throws IOException {
+        String fileName = "/Users/srm/IdeaProjects/dcms/connectivity/connectors/build/connectorDependencies/AMAZON_S3_DATA_ASSET/connectivity-amazon-s3-connector-1.7.0.jar";
+        JarFile jarFile = new JarFile(fileName);
+//        Iterator iterator = jarFile.entries().asIterator();
+//        while (iterator.hasNext()) {
+//            JarEntry jarEntry = (JarEntry) iterator.next();
+//           if (getExtension(jarEntry.getName()).equals("classpath")) {
+//               InputStream input = jarFile.getInputStream(jarEntry);
+//               process(input);
+//           }
+//        }
+
+        Iterator iterator = jarFile.stream().iterator();
+        while (iterator.hasNext()) {
+            JarEntry jarEntry = (JarEntry) iterator.next();
+            System.out.println(jarEntry.getName());
+        }
+
+//        JarEntry entry = jarFile.getJarEntry(args[1]);
+
+        jarFile.close();
+    }
+
+    private static void process(InputStream input)
+            throws IOException {
+        InputStreamReader isr =
+                new InputStreamReader(input);
+        BufferedReader reader = new BufferedReader(isr);
+        String line;
+        while ((line = reader.readLine()) != null) {
+            System.out.println(line);
+        }
+        reader.close();
     }
 
     private static void loggerDriver() {
@@ -89,5 +131,9 @@ public class Main {
             }
 
         }
+    }
+    private static String getExtension(String filename) {
+        String [] fileParts = filename.split("\\.");
+        return fileParts[fileParts.length - 1];
     }
 }
