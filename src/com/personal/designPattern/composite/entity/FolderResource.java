@@ -33,5 +33,8 @@ public class FolderResource implements Resource {
         return resourceList;
     }
 
+    public void addResource(Resource resource) {
+        resourceList.add(resource);
+    }
 
 }

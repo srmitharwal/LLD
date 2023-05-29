@@ -48,10 +48,11 @@ public class Node {
         this.requestServed = requestServed;
     }
 
-    public boolean addRequest(Request request) throws InterruptedException {
+    public boolean addRequest() throws InterruptedException {
+
         if (requestServed < threshold) {
             requestServed++;
-            Thread.sleep(request.getId() %2 * 100);
+            Thread.sleep(1 * 100);
             return true;
         } else {
             return false;

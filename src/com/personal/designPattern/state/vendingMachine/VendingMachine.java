@@ -4,13 +4,10 @@ import com.personal.designPattern.state.vendingMachine.bo.Coin;
 import com.personal.designPattern.state.vendingMachine.bo.Product;
 import com.personal.designPattern.state.vendingMachine.service.CoinService;
 import com.personal.designPattern.state.vendingMachine.service.ProductService;
-import com.personal.designPattern.state.vendingMachine.service.serviceImpl.CoinServiceImpl;
-import com.personal.designPattern.state.vendingMachine.service.serviceImpl.ProductServiceImpl;
 import com.personal.designPattern.state.vendingMachine.states.CoinInsertionState;
 import com.personal.designPattern.state.vendingMachine.states.ItemSelectionState;
 import com.personal.designPattern.state.vendingMachine.states.State;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class VendingMachine {
@@ -24,6 +21,7 @@ public class VendingMachine {
         this.coinService = coinService;
         this.state = new ItemSelectionState(this);
     }
+
 
     public List<Product> showAllproducts() {
 

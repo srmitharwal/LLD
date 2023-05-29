@@ -44,6 +44,7 @@ public class ServiceRegistry {
     public Set<Node> getNodes(String serviceType) {
         HashSet<Node> set = new HashSet<>();
         set.addAll(serviceMap.get(serviceType));
+
         return set;
     }
 }

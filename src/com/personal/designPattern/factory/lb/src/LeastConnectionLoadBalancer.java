@@ -28,6 +28,8 @@ public class LeastConnectionLoadBalancer implements LoadBalancer {
                 totalConnection = node.getRequestServed();
             }
         }
+
+        nodeWithLeastConnection.addRequest();
         return nodeWithLeastConnection;
     }
 
