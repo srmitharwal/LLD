@@ -28,6 +28,9 @@ import snakeandladder.service.DiceServiceImpl;
 import snakeandladder.service.GameService;
 import snakeandladder.service.GameServiceImpl;
 import PC.OddEven;
+import splitwise.models.*;
+import splitwise.services.*;
+
 import java.io.*;
 import java.util.*;
 import java.util.concurrent.ExecutorService;
@@ -56,8 +59,130 @@ public class Main {
 
        // testPC();
 
-        testOddEven();
+       // testOddEven();
 
+         testSplitWise();
+
+    }
+
+    private static void testSplitWise() {
+
+        User user1 = new User("srm1","srm1@gmail.com");
+        User user2 = new User("srm2", "srm2@gmail.com");
+        User user3 = new User("srm3", "srm3@gmail.com");
+
+
+
+        UserService userService = new UserServiceImpl();
+        GroupService groupService = new GroupServiceImpl();
+
+        ExpenseService expenseService = new ExpenseServiceImpl( groupService, userService);
+
+        user1 = userService.createUser(user1);
+        user2 = userService.createUser(user2);
+        user3 = userService.createUser(user3);
+        Expense expense;
+        List<User> userList = new ArrayList<>();
+        userList.add(user1);
+        userList.add(user2);
+        userList.add(user3);
+
+//        Group group1 = new Group("g1", userList);
+//        group1 = groupService.createGroup(group1);
+//        List<Double>priceList = new ArrayList<>();
+//        priceList.add(10.0);
+//        priceList.add(10.0);
+//        priceList.add(0.0);
+//        Expense expense = addGroupExpense(group1, 20, priceList, user1, expenseService);
+//       // 90 //-20 // -70
+//        priceList = new ArrayList<>();
+//        priceList.add(0.0);
+//        priceList.add(0.0);
+//        priceList.add(20.0);
+//         expense = addGroupExpense(group1, 20, priceList, user2, expenseService);
+//
+//
+//        priceList = new ArrayList<>();
+//        priceList.add(10.0);
+//        priceList.add(0.0);
+//        priceList.add(80.0);
+//        expense = addGroupExpense(group1, 90, priceList, user3, expenseService);
+//        group1 = groupService.getGroup(group1.getGroupId());
+//       printMap1(group1.getBalanceMap());
+       //a->b = 10 b-c = 20 c- a= 10
+
+        Expense tmp = addUserExpense(user1, user2, 100, 30, 70, expenseService);
+        expense = addUserExpense(user1, user2, 101, 20.5, 80.5, expenseService);
+        expense = addUserExpense(user3, user1, 10, 1, 9, expenseService);
+        expenseService.deleteExpense(tmp.getExpenseId());
+//        expense = addUserExpense(user2, user3, 5, 2, 3, expenseService);
+
+
+
+
+        user1 = userService.getUser(user1.getUserId());
+        user2 = userService.getUser(user2.getUserId());
+        user3 = userService.getUser(user3.getUserId());
+
+        System.out.println(user1.getBalance());
+        printMap(user1.getUserBalanceMap());
+
+        System.out.println(user2.getBalance());
+        printMap(user2.getUserBalanceMap());
+
+        System.out.println(user3.getBalance());
+        printMap(user3.getUserBalanceMap());
+
+    }
+
+
+
+
+    private static void printMap1(Map<String, List<UserBalanceInfo>> userBalanceMap) {
+        for(Map.Entry<String, List<UserBalanceInfo>> entry : userBalanceMap.entrySet()) {
+            System.out.print(entry.getKey() + " " );
+            for(int i = 0; i < entry.getValue().size(); i++) {
+                System.out.println(entry.getValue().get(i).getDebitor() + " " + entry.getValue().get(i).getBalance());
+            }
+        }
+    }
+
+    private static void printMap(Map<User, Double> userBalanceMap) {
+        for(Map.Entry<User, Double> entry : userBalanceMap.entrySet()) {
+            System.out.println(entry.getKey().getName() + " " + entry.getValue());
+        }
+    }
+
+    private static Expense addGroupExpense(Group group, double amount, List<Double> shareList, User user1, ExpenseService expenseService) {
+
+        Expense expense = new Expense();
+        expense.setExpenseType(ExpenseType.GROUP);
+        expense.setExpenseName("g1->expense");
+        expense.setCreditor(user1);
+        expense.setAmount(amount);
+        expense.setGroupId(group.getGroupId());
+        expense.setUsersList(group.getUserList());
+        Map<User, Double> shareMap = new HashMap<>();
+        for (int i = 0 ; i < group.getUserList().size(); i++) {
+            shareMap.put(group.getUserList().get(i), shareList.get(i));
+        }
+        expense.setShareMap(shareMap);
+        return expenseService.addExpense(expense);
+    }
+    private static Expense addUserExpense(User user1, User user2, double amount, double first, double second, ExpenseService expenseService) {
+        Expense expense = new Expense();
+        expense.setCreditor(user1);
+        List<User> userList = new ArrayList<>();
+        userList.add(user2);
+        expense.setUsersList(userList);
+        expense.setAmount(amount);
+        expense.setExpenseType(ExpenseType.USER);
+
+        Map<User, Double> shareMap = new HashMap<>();
+        shareMap.put(user1, first);
+        shareMap.put(user2, second);
+        expense.setShareMap(shareMap);
+        return expenseService.addExpense(expense);
     }
 
     private static void testOddEven() {
