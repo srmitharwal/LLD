@@ -29,9 +29,15 @@ import snakeandladder.service.GameService;
 import snakeandladder.service.GameServiceImpl;
 import PC.OddEven;
 import splitwise.models.*;
+import splitwise.models.User;
 import splitwise.services.*;
+import calendar.models.*;
+import calendar.services.*;
+import splitwise.services.UserService;
+import splitwise.services.UserServiceImpl;
 
 import java.io.*;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -61,7 +67,54 @@ public class Main {
 
        // testOddEven();
 
-         testSplitWise();
+//         testSplitWise();
+        testCalendar();
+
+    }
+
+    private static void testCalendar() {
+        calendar.services.UserService userService = new calendar.services.UserServiceImpl();
+
+        EventService eventService = new EventServiceImpl();
+
+        calendar.models.User user1 = new calendar.models.User("srm1","srm1@gmail.com");
+        calendar.models.User user2 = new calendar.models.User("srm2","srm1@gmail.com");
+        calendar.models.User user3 = new calendar.models.User("srm3","srm1@gmail.com");
+        calendar.models.User user4 = new calendar.models.User("srm4","srm1@gmail.com");
+
+        user1 = userService.createUser(user1);
+        user2 = userService.createUser(user2);
+        user3 = userService.createUser(user3);
+        user4 = userService.createUser(user4);
+
+
+        Map<calendar.models.User,Boolean> userMap = new HashMap<>();
+        userMap.put(user1, true);
+        userMap.put(user2,false);
+        userMap.put(user3,false);
+
+        Event event1 = new Meeting("meeting1", user1, LocalDateTime.now(), LocalDateTime.now().plusHours(4),userMap);
+        event1 = eventService.createEvent(event1);
+
+
+        userMap = new HashMap<>();
+        userMap.put(user2, true);
+        userMap.put(user1,false);
+        userMap.put(user4,false);
+        Event event2 = new Meeting("meeting1", user2, LocalDateTime.now().plusHours(4), LocalDateTime.now().plusHours(7), userMap);
+        event2 = eventService.createEvent(event2);
+
+
+        userMap = new HashMap<>();
+        userMap.put(user3, true);
+        userMap.put(user2,false);
+        Event event3 = new Meeting("meeting1", user2, LocalDateTime.now().plusHours(3), LocalDateTime.now().plusHours(7), userMap);
+        event2 = eventService.createEvent(event3);
+
+
+        List<Event> events = eventService.getEvents(user4,LocalDateTime.now().minusMinutes(30),LocalDateTime.now().plusHours(5));
+
+        System.out.println(events.size());
 
     }
 
