@@ -9,15 +9,17 @@ public class User {
 
     private String emailId;
 
-    private double balance;
+    private Map<String, Double> balance;
 
-    private Map<User, Double> userBalanceMap;
+    // user -> money
+    // user  -> pair<money, currency>
+    private Map<User, Map<String,Double>> userBalanceMap;
 
     public User(String name, String emailId) {
         this.name = name;
         this.emailId = emailId;
         this.userBalanceMap = new HashMap<>();
-        this.balance = 0;
+        this.balance = new HashMap<>();
     }
 
     public String getUserId() {
@@ -36,11 +38,11 @@ public class User {
         this.name = name;
     }
 
-    public double getBalance() {
+    public Map<String, Double> getBalance() {
         return balance;
     }
 
-    public void setBalance(double balance) {
+    public void setBalance(Map<String, Double> balance) {
         this.balance = balance;
     }
 
@@ -52,11 +54,11 @@ public class User {
         this.emailId = emailId;
     }
 
-    public Map<User, Double> getUserBalanceMap() {
+    public Map<User, Map<String, Double>> getUserBalanceMap() {
         return userBalanceMap;
     }
 
-    public void setUserBalanceMap(Map<User, Double> userBalanceMap) {
+    public void setUserBalanceMap(Map<User, Map<String, Double>> userBalanceMap) {
         this.userBalanceMap = userBalanceMap;
     }
 }

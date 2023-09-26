@@ -8,6 +8,9 @@ import splitwise.models.UserBalanceInfo;
 import java.util.*;
 
 public class DefaultPaymentGraphStrategy implements PaymentGraphStrategy {
+
+    static Map<String, Map<String, Double>> currencyMap = new HashMap<>();
+
     class Node {
         private String userId;
 
@@ -41,15 +44,21 @@ public class DefaultPaymentGraphStrategy implements PaymentGraphStrategy {
     }
     @Override
     public void makePaymentGraph(Group group) {
+
         PriorityQueue<Node> firstCategory = new PriorityQueue<>(new CustomComparator());
         PriorityQueue<Node> secondCategory = new PriorityQueue<>(new CustomComparator()); //We are storing the absoulte value
 
-        Map<String, Double> userBalanceMap = group.getUserBalanceMap();
+        Map<String, Map<String,Double>> userBalanceMap = group.getUserBalanceMap();
 
-        for (Map.Entry<String, Double> entry : userBalanceMap.entrySet()) {
+        for (Map.Entry<String, Map<String,Double>> entry : userBalanceMap.entrySet()) {
             Node node = new Node();
             node.setUserId(entry.getKey());
-            node.setBalance(entry.getValue());
+            double totalMoney = 0;
+            Map<String, Double> balanceMap = userBalanceMap.get(entry.getKey());
+            for(Map.Entry<String, Double> balanceEntry : balanceMap.entrySet()) {
+                totalMoney += currencyMap.get(balanceEntry.getKey()).get(group.getDefaultCurrency())*balanceEntry.getValue();
+            }
+            node.setBalance(totalMoney);
             if (node.getBalance() >= 0 )secondCategory.add(node);
             else firstCategory.add(node);
         }

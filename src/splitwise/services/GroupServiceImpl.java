@@ -23,8 +23,10 @@ public class GroupServiceImpl implements GroupService {
                 }
             }
         }
+
         paymentGraphStrategy = new DefaultPaymentGraphStrategy();
     }
+
     @Override
     public Group createGroup(Group group) {
         String groupId = Util.uuidGenerator();
@@ -48,7 +50,11 @@ public class GroupServiceImpl implements GroupService {
     @Override
     public Group updateGroup(Group group) {
         groupMap.put(group.getGroupId(), group);
+
+        // update User info
         paymentGraphStrategy.makePaymentGraph(group);
+
+        //update User info;
         return group;
     }
 }

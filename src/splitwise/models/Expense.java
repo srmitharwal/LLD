@@ -13,7 +13,7 @@ public class Expense {
 
     private ExpenseType expenseType;
 
-    private String splitType;
+    private SplitType splitType;
 
     private List<User> usersList;
 
@@ -24,6 +24,8 @@ public class Expense {
     private Map<User, Double> splitMap;
 
     private Map<User, Double> shareMap;
+
+    private String currency;
 
 
     public String getExpenseId() {
@@ -58,13 +60,6 @@ public class Expense {
         this.expenseType = expenseType;
     }
 
-    public String getSplitType() {
-        return splitType;
-    }
-
-    public void setSplitType(String splitType) {
-        this.splitType = splitType;
-    }
 
     public List<User> getUsersList() {
         return usersList;
@@ -104,6 +99,22 @@ public class Expense {
 
     public void setGroupId(String groupId) {
         this.groupId = groupId;
+    }
+
+    public SplitType getSplitType() {
+        return splitType;
+    }
+
+    public void setSplitType(SplitType splitType) {
+        this.splitType = splitType;
+    }
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
     }
 }
 

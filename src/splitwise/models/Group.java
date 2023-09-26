@@ -19,12 +19,11 @@ public class Group {
 
     private List<User> userList;
 
-
-
     private Map<String, List<UserBalanceInfo>> balanceMap;
 
-    private Map<String, Double> userBalanceMap;
+    private Map<String, Map<String,Double> > userBalanceMap;
 
+    private String defaultCurrency;
 
     public String getGroupId() {
         return groupId;
@@ -50,12 +49,11 @@ public class Group {
         this.userList = userList;
     }
 
-
-    public Map<String, Double> getUserBalanceMap() {
+    public Map<String, Map<String, Double>> getUserBalanceMap() {
         return userBalanceMap;
     }
 
-    public void setUserBalanceMap(Map<String, Double> userBalanceMap) {
+    public void setUserBalanceMap(Map<String, Map<String, Double>> userBalanceMap) {
         this.userBalanceMap = userBalanceMap;
     }
 
@@ -65,5 +63,13 @@ public class Group {
 
     public void setBalanceMap(Map<String, List<UserBalanceInfo>> balanceMap) {
         this.balanceMap = balanceMap;
+    }
+
+    public String getDefaultCurrency() {
+        return defaultCurrency;
+    }
+
+    public void setDefaultCurrency(String defaultCurrency) {
+        this.defaultCurrency = defaultCurrency;
     }
 }

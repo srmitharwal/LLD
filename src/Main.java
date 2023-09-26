@@ -67,8 +67,8 @@ public class Main {
 
        // testOddEven();
 
-//         testSplitWise();
-        testCalendar();
+        testSplitWise();
+ //       testCalendar();
 
     }
 
@@ -140,28 +140,28 @@ public class Main {
         userList.add(user2);
         userList.add(user3);
 
-//        Group group1 = new Group("g1", userList);
-//        group1 = groupService.createGroup(group1);
-//        List<Double>priceList = new ArrayList<>();
-//        priceList.add(10.0);
-//        priceList.add(10.0);
-//        priceList.add(0.0);
-//        Expense expense = addGroupExpense(group1, 20, priceList, user1, expenseService);
-//       // 90 //-20 // -70
-//        priceList = new ArrayList<>();
-//        priceList.add(0.0);
-//        priceList.add(0.0);
-//        priceList.add(20.0);
-//         expense = addGroupExpense(group1, 20, priceList, user2, expenseService);
-//
-//
-//        priceList = new ArrayList<>();
-//        priceList.add(10.0);
-//        priceList.add(0.0);
-//        priceList.add(80.0);
-//        expense = addGroupExpense(group1, 90, priceList, user3, expenseService);
-//        group1 = groupService.getGroup(group1.getGroupId());
-//       printMap1(group1.getBalanceMap());
+        Group group1 = new Group("g1", userList);
+        group1 = groupService.createGroup(group1);
+        List<Double>priceList = new ArrayList<>();
+        priceList.add(10.0);
+        priceList.add(10.0);
+        priceList.add(0.0);
+        expense = addGroupExpense(group1, 20, priceList, user1, expenseService);
+       // 90 //-20 // -70
+        priceList = new ArrayList<>();
+        priceList.add(0.0);
+        priceList.add(0.0);
+        priceList.add(20.0);
+         expense = addGroupExpense(group1, 20, priceList, user2, expenseService);
+
+
+        priceList = new ArrayList<>();
+        priceList.add(10.0);
+        priceList.add(0.0);
+        priceList.add(80.0);
+        expense = addGroupExpense(group1, 90, priceList, user3, expenseService);
+        group1 = groupService.getGroup(group1.getGroupId());
+       printMap1(group1.getBalanceMap());
        //a->b = 10 b-c = 20 c- a= 10
 
         Expense tmp = addUserExpense(user1, user2, 100, 30, 70, expenseService);
@@ -260,6 +260,8 @@ public class Main {
         t1.start();
         t2.start();
     }
+    //msgId, sender, recierver, content, bloburl, type, timestamp
+    //
 
     private static void testPC() throws InterruptedException {
         PC pc = new PC(1);
